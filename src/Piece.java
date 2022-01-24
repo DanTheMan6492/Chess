@@ -40,6 +40,11 @@ public class Piece {
         this.x = alt.x;
         this.y = alt.y;
         this.Name = alt.Name;
+        this.tx = alt.tx;
+        this.x = alt.x;
+        this.Y = alt.y;
+        this.lastMoved = alt.lastMoved;
+        this.dragged = alt.dragged;
     }
 
     public ArrayList<Integer[]> genMoves(Piece[][] board, boolean checking){
@@ -140,6 +145,7 @@ public class Piece {
         y = 100*Main.y;
         Integer[] temp = {x/100, y/100};
         if(isInList(moves, temp)){
+        	type = 3;
             if(Main.board.board[y/100][x/100] != null){
                 type = 1;
             }
@@ -180,6 +186,10 @@ public class Piece {
                         state = 2;
                     }
                 }
+                if(y == 0 || y == 700) {
+                	dragged = false;
+                	Main.board.board[y/100][x/100] = new Queen(this);
+                }
             }
             lastMoved = Main.turn;
             Main.turn++;
@@ -188,7 +198,7 @@ public class Piece {
             y = Y;
         }
         switch(type){
-            case 0:
+            case 3:
             Main.Move.play();
             break;
             case 1:

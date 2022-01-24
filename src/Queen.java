@@ -17,6 +17,15 @@ public class Queen extends Piece {
 
     public Queen(Piece piece) {
         super(piece);
+        Name = "Queen";
+        String path = "/imgs/Pieces/";
+        if(color == 0){
+            path += "W";
+        } else{
+            path += "B";
+        }
+        path += "_Queen.png";
+        Sprite = getImage(path);
     }
 
     @Override

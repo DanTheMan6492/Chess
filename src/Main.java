@@ -31,12 +31,14 @@ public class Main extends JPanel implements ActionListener, MouseListener, KeyLi
 	public static int turn;
 	public Piece dragging;
 	public boolean play = true;
+	public boolean gameOver = false;
 
 	public static Music Capture = new Music("Capture.wav", false);
 	public static Music Castle  = new Music("Castle.wav" , false);
 	public static Music Check   = new Music("Check.wav"  , false);
 	public static Music Game    = new Music("Game.wav"   , false);
 	public static Music Move    = new Music("Move.wav"   , false);
+	public int timer = 500;
 
     public static Board board = new Board();
 
@@ -67,10 +69,12 @@ public class Main extends JPanel implements ActionListener, MouseListener, KeyLi
             flag = !flag;
         }
 
-		g.setColor(Color.WHITE);
+        g.setColor(Color.WHITE);
         AlphaComposite alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f);
-		g2.setComposite(alcom);
-		g2.fillRect(x*100, y*100, 100, 100);
+        if(!gameOver) {
+    		g2.setComposite(alcom);
+    		g2.fillRect(x*100, y*100, 100, 100);
+        }
 
         alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1);
 		g2.setComposite(alcom);
@@ -78,6 +82,7 @@ public class Main extends JPanel implements ActionListener, MouseListener, KeyLi
 
 
         board.paint(g);
+
 
 		alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.6f);
 		g2.setComposite(alcom);
@@ -115,28 +120,36 @@ public class Main extends JPanel implements ActionListener, MouseListener, KeyLi
 		g2.setComposite(alcom);
 		g.setColor(Color.black);
 		if(flag){
-			g.fillRect(0, 0, 900, 900);
-			g.setColor(Color.white);
-			g.drawString("Check Mate!", 400, 400);
-			if(play){
-				Game.play();
-				play = false;
+			if(timer <= 0) {
+				gameOver = true;
+				g.fillRect(0, 0, 800, 800);
+				g.setColor(Color.white);
+				g.drawString("Check Mate!", 400, 400);
+				if(play){
+					Game.play();
+					play = false;
+				}
+				switch(turn%2){
+					case 0:
+					g.drawString("Black Wins", 400, 500);
+					break;
+					case 1:
+					g.drawString("White wins", 400, 500);
+					break;
+				}
+			} else {
+				timer--;
 			}
-			switch(turn%2){
-				case 0:
-				g.drawString("Black Wins", 400, 500);
-				break;
-				case 1:
-				g.drawString("White wins", 400, 500);
-				break;
-			}
+			
+		} else {
+			timer = 10;
 		}
 		
     }
 
     public Main() {
 		JFrame f = new JFrame("Chess");
-		f.setSize(new Dimension(815, 840));
+		f.setSize(new Dimension(800, 830));
 		f.setBackground(Color.blue);
 		f.add(this);
 		f.setResizable(false);
@@ -163,7 +176,7 @@ public class Main extends JPanel implements ActionListener, MouseListener, KeyLi
 			dragging.release();
 			
 			dragging = null;
-		} else if(board.board[y][x] != null){
+		} else if(board.board[y][x] != null && !gameOver){
 			dragging = board.board[y][x];
 			if(dragging.color == turn%2){
 				dragging.pick();
