@@ -115,6 +115,7 @@ public class Main extends JPanel implements ActionListener, MouseListener, KeyLi
 				
 			}
 		}
+		
 
 		alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.6f);
 		g2.setComposite(alcom);
@@ -144,6 +145,10 @@ public class Main extends JPanel implements ActionListener, MouseListener, KeyLi
 		} else {
 			timer = 10;
 		}
+		
+		if(turn %2 == 1) {
+    		CPU.nextMove(board.board);
+    	}
 		
     }
 
