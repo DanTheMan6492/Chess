@@ -146,9 +146,6 @@ public class Main extends JPanel implements ActionListener, MouseListener, KeyLi
 			timer = 10;
 		}
 		
-		if(turn %2 == 1) {
-    		CPU.nextMove(board.board);
-    	}
 		
     }
 

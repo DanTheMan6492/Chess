@@ -47,12 +47,14 @@ public class Pawn extends Piece {
         }
 
         //captures
-        if(!placeEmpty(board, (x/100)-1, (y/100)+offset)){
+        if(!placeEmpty(board, (x/100)-1, (y/100)+offset)) {
             if(inBoard(x/100-1, y/100+offset)){
-                temp[0] = (x/100)-1;
-                temp[1] = (y/100)+offset;
-                result.add(temp);
-                temp = new Integer[2];
+            	if(board[y/100+offset][x/100-1].color != this.color) {
+            		temp[0] = (x/100)-1;
+                    temp[1] = (y/100)+offset;
+                    result.add(temp);
+                    temp = new Integer[2];
+            	}
             }
         }
         if(!placeEmpty(board, (x/100)-1, y/100)){
@@ -64,10 +66,13 @@ public class Pawn extends Piece {
         }
 
         if(!placeEmpty(board, (x/100)+1, (y/100)+offset)){
-            if(inBoard(x/100+1, y/100+offset)){
-                temp[0] = (x/100)+1;
-                temp[1] = (y/100)+offset;
-                result.add(temp);
+        	if(inBoard(x/100+1, y/100+offset)){
+            	if(board[y/100+offset][x/100+1].color != this.color) {
+            		temp[0] = (x/100)+1;
+                    temp[1] = (y/100)+offset;
+                    result.add(temp);
+                    temp = new Integer[2];
+            	}
             }
             
         }

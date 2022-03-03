@@ -76,8 +76,8 @@ public class Piece {
 
     public void move(int x, int y){
         int type = 0;
-        this.x = x;
-        this.y = y;
+        this.x = x*100;
+        this.y = y*100;
         Integer[] temp = {x, y};
         if(isInList(moves, temp)){
             if(Main.board.board[y/100][x/100] != null){
